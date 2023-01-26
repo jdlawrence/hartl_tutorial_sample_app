@@ -1,6 +1,6 @@
-# fly.toml file generated for nameless-sea-4586 on 2023-01-19T21:51:03-06:00
+# fly.toml file generated for cold-shadow-8237 on 2023-01-25T20:39:51-06:00
 
-app = "nameless-sea-4586"
+app = "cold-shadow-8237"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
