@@ -60,9 +60,9 @@ group :test do
   gem 'guard-minitest',           '2.4.6'
 end
 
-group :production do
-  gem 'pg', '1.2.3'
-end
+# group :production do
+#   gem 'pg', '1.2.3'
+# end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
@@ -70,3 +70,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "erb-formatter", "~> 0.4.2"
 
 gem 'htmlbeautifier'
+
+gem "dockerfile-rails", ">= 1.2", :group => :development
