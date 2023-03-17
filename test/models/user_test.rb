@@ -7,12 +7,11 @@ class UserTest < ActiveSupport::TestCase
         name: "Example Userwer",
         email: "user@example.com",
         password: "foobar",
-        password_confirmation: "foo"
+        password_confirmation: "foobar"
       )
   end
 
   test "should be valid" do
-    debugger
     assert @user.valid?
   end
 
