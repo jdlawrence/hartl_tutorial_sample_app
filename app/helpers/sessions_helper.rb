@@ -13,7 +13,7 @@ module SessionsHelper
   end
 
   # Logs out the current user.
-  # testing deployment
+  # testing deployment once again
   def log_out
     session.delete(:user_id)
     @current_user = nil
