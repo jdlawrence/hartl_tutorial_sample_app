@@ -2,16 +2,23 @@
 #
 # Table name: users
 #
-#  id              :integer          not null, primary key
-#  name            :string
-#  email           :string
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  password_digest :string
-#  remember_digest :string
+#  id                :integer          not null, primary key
+#  name              :string
+#  email             :string
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  password_digest   :string
+#  remember_digest   :string
+#  admin             :boolean
+#  activation_digest :string
+#  activated         :boolean          default(FALSE)
+#  activated_at      :datetime
 #
 class User < ApplicationRecord
-  before_save { email.downcase! }
+  attr_accessor :remember_token, :activation_token
+  before_save :downcase_email
+  before_create :create_activation_digest
+
   validates :name, presence: true, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
 
@@ -27,8 +34,6 @@ class User < ApplicationRecord
 
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
   has_secure_password
-
-  attr_accessor :remember_token
 
   # Returns the hash digest of the given string.
   # def User.digest(string)
@@ -64,5 +69,17 @@ class User < ApplicationRecord
   def authenticated?(remember_token)
     return false if remember_digest.nil?
     BCrypt::Password.new(remember_digest).is_password?(remember_token)
+  end
+
+  private
+
+  # Converts email to all lower-case.
+  def downcase_email
+    email.downcase!
+  end
+  # Creates and assigns the activation token and digest.
+  def create_activation_digest
+    self.activation_token = User.new_token
+    self.activation_digest = User.digest(activation_token)
   end
 end
