@@ -60,7 +60,7 @@ class User < ApplicationRecord
     update_attribute(:remember_digest, User.digest(remember_token))
   end
 
-  # Forgets a user.
+  # Forgets a user. (Deployment check)
   def forget
     update_attribute(:remember_digest, nil)
   end
