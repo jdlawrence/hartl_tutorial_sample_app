@@ -12,9 +12,11 @@ class UsersIndexTest < ActionDispatch::IntegrationTest
     assert_select "div.pagination", count: 2
     first_page_of_users = User.paginate(page: 1)
     first_page_of_users.each do |user|
-      assert_select "a[href=?]", user_path(user), text: user.name
-      unless user == @admin
-        assert_select "a[href=?]", user_path(user), text: "delete"
+      if user.activated?
+        assert_select "a[href=?]", user_path(user), text: user.name
+        unless user == @admin
+          assert_select "a[href=?]", user_path(user), text: "delete"
+        end
       end
     end
     assert_difference "User.count", -1 do
@@ -26,5 +28,22 @@ class UsersIndexTest < ActionDispatch::IntegrationTest
     log_in_as(@non_admin)
     get users_path
     assert_select "a", text: "delete", count: 0
+  end
+
+  test "should only show users that have been activated" do
+    log_in_as(@admin)
+    get users_path
+    first_page_of_users = User.paginate(page: 1)
+    first_page_of_users.each do |user|
+      if user.activated?
+        assert_select "a[href=?]", user_path(user), text: user.name
+        unless user == @admin
+          assert_select "a[href=?]", user_path(user), text: "delete"
+        end
+      else
+        assert_equal user.name, "Not_active Userguy"
+        assert_select "a[href=?]", user_path(user), text: user.name, count: 0
+      end
+    end
   end
 end
