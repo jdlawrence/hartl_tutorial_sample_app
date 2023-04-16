@@ -30,6 +30,7 @@ gem "bcrypt", "3.1.13"
 gem "faker", "2.11.0"
 gem "will_paginate", "3.3.0"
 gem "bootstrap-will_paginate", "1.0.0"
+gem 'active_storage_validations', '0.8.9'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.4.4", require: false
