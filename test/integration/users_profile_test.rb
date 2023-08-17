@@ -13,8 +13,8 @@ class UsersProfileTest < ActionDispatch::IntegrationTest
     assert_select "h1", text: @user.name
     assert_select "h1>img.gravatar"
     assert_match @user.microposts.count.to_s, response.body
-    assert_select 'strong.following', @user.following.count
-    assert_select 'strong.followers', @user.followers.count
+    assert_select 'strong#following', text: /#{@user.following.count}/
+    assert_select 'strong#following', text: /#{@user.followers.count}/
     assert_select "div.pagination", count: 1
     @user
       .microposts
